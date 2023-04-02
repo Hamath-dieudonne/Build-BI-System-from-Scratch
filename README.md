@@ -85,7 +85,7 @@ aws-analytics-immersion-day-main
 gen_kinesis_data.py
 main.zip
 upsert_to_es.py
-````
+```
 In order to run the Python synthentic data generator script (``gen_kinesis_data.py``), we need to set user credentials by following the instructions:
 
 Perform aws configure to access other AWS resources. At this time, the IAM User data created earlier is used. Open the previously downloaded .csv file, check the Access key ID and Secret access key, and enter them.
@@ -117,4 +117,64 @@ We are now ready to build a data analysis system using the AWS Analytics service
 
 ### Create Kinesis Data Firehose to store data in S3Header anchor link
 Kinesis Data Firehose will allow collecting data in real-time and batch it to load into a storage location such as Amazon S3, Amazon Redshift or ElasticSearch.
+
+If you are on the Kinesis Data Stream page from the previous step, select Delivery streams from the left sidebar. If you are starting from the Kinesis landing page, select the Kinesis Data Firehose radio button and click the Create delivery stream button.
+
+(Step 1: Name and source) For Delivery stream name enter retail-trans.
+
+Under Choose a source, select the Kinesis Data Stream radio button and choose retail-trans stream that you created earlier from the dropdown list. Click Next. If you do not see your data stream listed, make sure you are in Oregon region and your data stream from previous step is in Active state.
+
+Select Amazon S3 as Destination and click Create new to create a new S3 bucket
+
+S3 bucket names are globally unique, so choose a bucket name that is unique for you. You can call it aws-analytics-immersion-day-xxxxxxxx where xxxxxxxx is a series of random numbers or characters of your choice.
+
+Under S3 Prefix, copy and paste the following text exactly as shown.
+```
+json-data/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/
+```
+Under S3 error prefix, copy and paste the following text exactly as shown.
+```
+error-json/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/!{firehose:error-output-type}
+```
+Set buffer size to 1 MB and buffer interval to 60 seconds in S3 buffer conditions.
+
+Under Permissions IAM role, select Create or update IAM role
+
+Click the Create delivery stream button to complete the Firehose creation.
+
+### Verify data pipeline operationHeader anchor link
+
+In this step, we will generate sample data and verify it is being processed and stored as follows- ``Kinesis Data Streams -> Kinesis Data Firehose -> S3``.
+
+Connect by SSH to the previously created E2 instance.
+Run the gen_kinesis_data.py script on the EC2 instance by entering the following command:
+```
+python3 gen_kinesis_data.py \
+  --region-name us-east-1 \
+  --service-name kinesis \
+  --stream-name retail-trans
+```
+Verify that data is generated every second. Let it run for about one minute and terminate the script. You can enter Ctrl+C to end the script execution.
+```
+[ec2-user@ip-172-31-2-252 ~]$ python3 gen_kinesis_data.py --region-name us-east-1 --service-name kinesis --stream-name retail-trans --max-count 100
+[INFO] 10 records are processed
+[INFO] 20 records are processed
+[INFO] 30 records are processed
+[INFO] 40 records are processed
+[INFO] 50 records are processed
+[INFO] 60 records are processed
+[INFO] 70 records are processed
+[INFO] 80 records are processed
+[INFO] 90 records are processed
+[INFO] 100 records are processed
+[INFO] Total 100 records are processed
+```
+
+After 5~10 minutes, go to S3 service and open the bucket you created earlier. You can see that the original data has been delivered by Kinesis Data Firehose to S3 and stored in a folder structure by year, month, day, and hour.
+
+### Analyze data using Athena
+Using Amazon Athena, you can create tables based on data stored in S3, query those tables using SQL, and view query results.
+
+
+
 
