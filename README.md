@@ -70,7 +70,7 @@ wget 'https://github.com/aws-samples/aws-analytics-immersion-day/archive/refs/he
 unzip -u main.zip
 ```
 (3) Grant execution authority to the practice environment setting script.
-````
+```
 chmod +x ./aws-analytics-immersion-day-main/set-up-hands-on-lab.sh
 ```
 (4) Execute the setup script to set the lab environment.
