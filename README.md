@@ -227,6 +227,63 @@ After 5~10 minutes, go to S3 service and open the bucket you created earlier. Yo
 ### Analyze data using Athena
 Using Amazon Athena, you can create tables based on data stored in S3, query those tables using SQL, and view query results.
 
+**Create database**
+First, create a database to query the data.
+
+![CREATE DATABASE mydatabase](assets/mydatabase.PNG)
+
+**Create a table**
+Make sure that mydatabase is selected in Database, and click the + button above the query window to open a new query.
+
+Copy the following query into the query editor window, replace the xxxxxxx in the last line under LOCATION with the string of your S3 bucket, and click the Run Query button to execute the query to create a new table.
+
+```
+CREATE EXTERNAL TABLE `mydatabase.retail_trans_json`(
+  `invoice` string COMMENT 'Invoice number', 
+  `stockcode` string COMMENT 'Product (item) code', 
+  `description` string COMMENT 'Product (item) name', 
+  `quantity` int COMMENT 'The quantities of each product (item) per transaction', 
+  `invoicedate` timestamp COMMENT 'Invoice date and time', 
+  `price` float COMMENT 'Unit price', 
+  `customer_id` string COMMENT 'Customer number', 
+  `country` string COMMENT 'Country name')
+PARTITIONED BY ( 
+  `year` int, 
+  `month` int, 
+  `day` int, 
+  `hour` int)
+ROW FORMAT SERDE 
+  'org.openx.data.jsonserde.JsonSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+LOCATION
+  's3://aws-analytics-immersion-day-xxxxxxxx/json-data'
+```
+
+![table](assats/tables.PNG)
+
+After creating the table, click the + button to create a new query. Run the following query to load the partition data.
+
+```
+MSCK REPAIR TABLE mydatabase.retail_trans_json
+```
+![partition](assets/partition.PNG)
 
 
+**Query Data**
+Click the + button to open a new query tab. Enter the following SQL statement to query 10 transactions from the table and click Run Query.
 
+```
+SELECT *
+FROM retail_trans_json
+LIMIT 10
+```
+
+![query result](assets/query_result.PNG)
+
+### Quicksight
+Let's visualize the Quantity and Price by InvoiceDate. Select vertical bar chart from the Visual types box on the bottom left. In the field wells, drag invoicedate from the left panel into X axis, drag price, and quantity into Value. You will see a chart get populated as shown below.
+
+![visual](assets/viz.PNG)
