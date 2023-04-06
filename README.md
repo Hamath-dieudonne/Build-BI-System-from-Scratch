@@ -275,6 +275,7 @@ MSCK REPAIR TABLE mydatabase.retail_trans_json
 
 
 **Query Data**
+
 Click the + button to open a new query tab. Enter the following SQL statement to query 10 transactions from the table and click Run Query.
 
 ```
