@@ -32,7 +32,7 @@ We will create a security group to use with an Amazon EC2 instance which will se
 - Port Range : 22
 - Source : ``Your network's public IPv4 address range``
 
-![security group1](assets/SG1)
+![security group1](assets/SG1.PNG)
 
 ### Security Group for use with Elasticsearch Service
 **Basic Details**
@@ -41,7 +41,7 @@ We will create a security group to use with an Amazon EC2 instance which will se
 
 **Inbound rules** Leave empty.
 
-![security group2](assets/SG2)
+![security group2](assets/SG2.PNG)
 
 ### A other Security Group 
 **Basic details**
@@ -55,7 +55,7 @@ We will create a security group to use with an Amazon EC2 instance which will se
 - Source : ``use-es-cluster-sg`` from the dropdown list. For example: sg-038b632ef1825cb7f
 **Outbound rules** Leave at default values.
 
-![security group3](assets/SG3)
+![security group3](assets/SG3.PNG)
 
 ## Launch an EC2 Instance
 We will create an EC2 instance that will run code to generate the data needed for the lab.
