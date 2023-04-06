@@ -67,10 +67,15 @@ We will create an EC2 instance that will run code to generate the data needed fo
 - Create a key pair to access EC2 Instance.
 
 ![instance](assets/launch_inst.PNG)
+
 ![bastion](assets/instance_name.PNG)
+
 ![instance type](assets/t2micro.PNG)
+
 ![key pair](assets/key.PNG)
+
 ![network](assets/networ.PNG)
+
 ![run intance](assets/running.PNG)
 
 ## Configuring your EC2 Instance
@@ -162,6 +167,7 @@ Select Amazon S3 as Destination and click Create new to create a new S3 bucket
 S3 bucket names are globally unique, so choose a bucket name that is unique for you. You can call it aws-analytics-immersion-day-xxxxxxxx where xxxxxxxx is a series of random numbers or characters of your choice.
 
 ![K1](assets/K1.PNG)
+
 ![K2](assets/K2.PNG)
 
 Under S3 Prefix, copy and paste the following text exactly as shown.
@@ -177,6 +183,7 @@ Set buffer size to 1 MB and buffer interval to 60 seconds in S3 buffer condition
 Under Permissions IAM role, select Create or update IAM role
 
 ![K4](assets/K4.PNG)
+
 ![K5](assets/K5.PNG)
 
 Click the Create delivery stream button to complete the Firehose creation.
