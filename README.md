@@ -137,7 +137,7 @@ Default output format [None]:
 ## Build up Data Analytics System
 We are now ready to build a data analysis system using the AWS Analytics services. 
 
-![ready to built](assets/built.PNG)
+![ready to built](assets/build.PNG)
 
 ### Create Kinesis Data Stream to receive input dataHeader anchor link
 - Select Kinesis from the list of services on the AWS Management Console.
