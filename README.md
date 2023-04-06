@@ -144,7 +144,7 @@ We are now ready to build a data analysis system using the AWS Analytics service
 
 ![ready to built](assets/build.PNG)
 
-### Create Kinesis Data Stream to receive input dataHeader anchor link
+### Create Kinesis Data Stream to receive input data
 - Select Kinesis from the list of services on the AWS Management Console.
 - Make sure the Kinesis Data Streams radio button is selected and click Create data stream button.
 - Enter retail-trans as the Data stream name.
@@ -153,7 +153,7 @@ We are now ready to build a data analysis system using the AWS Analytics service
 
 ![create data stream](assets/data_stream.PNG)
 
-### Create Kinesis Data Firehose to store data in S3Header anchor link
+### Create Kinesis Data Firehose to store data in S3
 Kinesis Data Firehose will allow collecting data in real-time and batch it to load into a storage location such as Amazon S3, Amazon Redshift or ElasticSearch.
 
 If you are on the Kinesis Data Stream page from the previous step, select Delivery streams from the left sidebar. If you are starting from the Kinesis landing page, select the Kinesis Data Firehose radio button and click the Create delivery stream button.
@@ -188,7 +188,7 @@ Under Permissions IAM role, select Create or update IAM role
 
 Click the Create delivery stream button to complete the Firehose creation.
 
-### Verify data pipeline operationHeader anchor link
+### Verify data pipeline operation
 
 In this step, we will generate sample data and verify it is being processed and stored as follows- ``Kinesis Data Streams -> Kinesis Data Firehose -> S3``.
 
@@ -228,11 +228,13 @@ After 5~10 minutes, go to S3 service and open the bucket you created earlier. Yo
 Using Amazon Athena, you can create tables based on data stored in S3, query those tables using SQL, and view query results.
 
 **Create database**
+
 First, create a database to query the data.
 
 ![CREATE DATABASE mydatabase](assets/mydatabase.PNG)
 
 **Create a table**
+
 Make sure that mydatabase is selected in Database, and click the + button above the query window to open a new query.
 
 Copy the following query into the query editor window, replace the xxxxxxx in the last line under LOCATION with the string of your S3 bucket, and click the Run Query button to execute the query to create a new table.
@@ -262,7 +264,7 @@ LOCATION
   's3://aws-analytics-immersion-day-xxxxxxxx/json-data'
 ```
 
-![table](assats/tables.PNG)
+![table](assets/tables.PNG)
 
 After creating the table, click the + button to create a new query. Run the following query to load the partition data.
 
